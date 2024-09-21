@@ -10,9 +10,10 @@ tweetBtn.addEventListener('click', () => {
 // We hook up an event listener to the 'document' itself because in this app we only have four buttons we can click, the 'tweet' button, and the icons for reply, like, and retweet.
 // This way we keep the code 'DRY' and we don't hook up too many event listeners.
 document.addEventListener('click', (e) => {
-    if(e.target.dataset.like) {
+    if (e.target.dataset.like)
         handleLikeClick(e.target.dataset.like)
-    }
+    else if (e.target.dataset.retweet)
+        handleRetweetClick(e.target.dataset.retweet)
 })
 
 const handleLikeClick = (tweetId) => {
@@ -49,6 +50,18 @@ const handleLikeClick = (tweetId) => {
                  we are actually changing the original object in the original "tweetData array", so when we call the render() here, 
                  it will display the new value of likes.
                  */
+}
+
+const handleRetweetClick = (tweetId) => {
+    const targetTweetObj = tweetsData.filter(tweet => {
+        return tweet.uuid === tweetId
+    })[0]
+    if (targetTweetObj.isRetweeted)
+        targetTweetObj.retweets--
+    else
+        targetTweetObj.retweets++
+    targetTweetObj.isRetweeted = !targetTweetObj.isRetweeted
+    render()
 }
 
 const getFeedHtml = () => {
