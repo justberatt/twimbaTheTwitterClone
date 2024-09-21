@@ -36,7 +36,7 @@ const handleLikeClick = (tweetId) => {
     // A more readable approach (although not neccessarily more efficient)
     const targetTweetObj = tweetsData.filter(tweet => {
         return tweet.uuid === tweetId // Returns either true or false
-    })[0];
+    })[0]; // We take the first object of the array returned because here we know for sure that only one object will pass the test since UUIDs are unique identifiers
 
     if (targetTweetObj.isLiked)
         targetTweetObj.likes--;
