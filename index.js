@@ -67,6 +67,15 @@ const handleRetweetClick = (tweetId) => {
 const getFeedHtml = () => {
     let feedHtml = ``;
     tweetsData.forEach(tweet => {
+        let likeIconClass = '' // This is the class that will be added inside the HTML classlist of the heart icon
+        let retweetIconClass = '' //    - || - || - ||  - || - || - ||  - || - || - ||  - || - of the retweed icon
+
+        if(tweet.isLiked)
+            likeIconClass = 'liked' // We have this class styled in the CSS. This part of the code runs or doesn't depending on the handleLikeClick() function
+
+        if(tweet.isRetweeted)
+            retweetIconClass = 'retweeted' // We have this class styled in the CSS. This part of the code runs or doesn't depending on the handleRetweetClick() function
+
         feedHtml += `
             <div class="tweet">
                 <div class="tweet-inner">
@@ -88,13 +97,13 @@ const getFeedHtml = () => {
                                 ${tweet.replies.length}
                             </span>
                             <span class="tweet-detail">
-                                <i class="fa-solid fa-heart"
+                                <i class="fa-solid fa-heart ${likeIconClass}"
                                 data-like="${tweet.uuid}"
                                 ></i>
                                 ${tweet.likes}
                             </span>
                             <span class="tweet-detail">
-                                <i class="fa-solid fa-retweet"
+                                <i class="fa-solid fa-retweet ${retweetIconClass}"
                                 data-retweet="${tweet.uuid}"
                                 ></i>
                                 ${tweet.retweets}
