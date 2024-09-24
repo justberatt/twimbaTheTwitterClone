@@ -14,6 +14,8 @@ document.addEventListener('click', (e) => {
         handleLikeClick(e.target.dataset.like)
     else if (e.target.dataset.retweet)
         handleRetweetClick(e.target.dataset.retweet)
+    else if(e.target.dataset.reply)
+        handleReplyClick(e.target.dataset.reply)
 })
 
 const handleLikeClick = (tweetId) => {
@@ -62,6 +64,11 @@ const handleRetweetClick = (tweetId) => {
         targetTweetObj.retweets++
     targetTweetObj.isRetweeted = !targetTweetObj.isRetweeted
     render()
+}
+
+const handleReplyClick = (replyID) => {
+    const replyDiv = document.getElementById(`replies-${replyID}`);
+    replyDiv.classList.toggle('hidden')
 }
 
 const getFeedHtml = () => {
@@ -128,7 +135,7 @@ const getFeedHtml = () => {
                         </div>   
                     </div>            
                 </div>
-                <div id="replies-${tweet.uuid}">
+                <div class="hidden" id="replies-${tweet.uuid}">
                     ${repliesHtml}
                 </div>
             </div>
