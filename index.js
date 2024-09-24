@@ -18,6 +18,11 @@ document.addEventListener('click', (e) => {
         handleReplyClick(e.target.dataset.reply)
 })
 
+const handleReplyClick = (replyID) => {
+    const replyDiv = document.getElementById(`replies-${replyID}`);
+    replyDiv.classList.toggle('hidden')
+}
+
 const handleLikeClick = (tweetId) => {
     // My first more direct approach
     /*tweetsData.forEach(tweet => {
@@ -64,11 +69,6 @@ const handleRetweetClick = (tweetId) => {
         targetTweetObj.retweets++
     targetTweetObj.isRetweeted = !targetTweetObj.isRetweeted
     render()
-}
-
-const handleReplyClick = (replyID) => {
-    const replyDiv = document.getElementById(`replies-${replyID}`);
-    replyDiv.classList.toggle('hidden')
 }
 
 const getFeedHtml = () => {
