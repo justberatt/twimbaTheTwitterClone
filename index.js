@@ -1,11 +1,9 @@
 import { tweetsData  } from "./data.js";
+import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
 
-const tweetInput = document.getElementById('tweet-input');
-const tweetBtn = document.getElementById('tweet-btn');
-
-tweetBtn.addEventListener('click', () => {
-    console.log(tweetInput.value)
-})
+// tweetBtn.addEventListener('click', () => {
+//     console.log(tweetInput.value)
+// })
 
 // We hook up an event listener to the 'document' itself because in this app we only have four buttons we can click, the 'tweet' button, and the icons for reply, like, and retweet.
 // This way we keep the code 'DRY' and we don't hook up too many event listeners.
@@ -16,11 +14,9 @@ document.addEventListener('click', (e) => {
         handleRetweetClick(e.target.dataset.retweet)
     else if(e.target.dataset.reply)
         handleReplyClick(e.target.dataset.reply)
+    else if(e.target.id === 'tweet-btn')
+        handleTweetBtnClick()
 })
-
-const handleReplyClick = (replyID) => {
-    document.getElementById(`replies-${replyID}`).classList.toggle('hidden')
-}
 
 const handleLikeClick = (tweetId) => {
     // My first more direct approach
@@ -70,6 +66,31 @@ const handleRetweetClick = (tweetId) => {
     render()
 }
 
+const handleReplyClick = (replyID) => {
+    document.getElementById(`replies-${replyID}`).classList.toggle('hidden')
+}
+
+const handleTweetBtnClick = () => {
+    const tweetInput = document.getElementById('tweet-input');
+    if (tweetInput.value) {
+        tweetsData.unshift(
+            {
+                handle: `@Scrimba`,
+                profilePic: `images/scrimbalogo.png`,
+                likes: 0,
+                retweets: 0,
+                tweetText: tweetInput.value,
+                replies: [],
+                isLiked: false,
+                isRetweeted: false,
+                uuid: uuidv4(), 
+            }
+        )
+        render()
+        tweetInput.value = ''
+    }
+}
+
 const getFeedHtml = () => {
     let feedHtml = ``;
     tweetsData.forEach(tweet => {
@@ -110,6 +131,7 @@ const getFeedHtml = () => {
                             <span class="tweet-detail">
                                 <i class="fa-regular fa-comment-dots"
                                 ${/* We use the 'data' attribute because we need to connect the icons to the id of the parent element holding the tweet and the icons.
+                                    So we need the data attributes so that we know which tweet does the icon belong to when we click it.
                                     Normally to do that, we would to give the id of the parent to each of the icons, but that is impossible because ids are unique.
                                     But we can achieve that same result by giving the icons a data attribute. And of course data attributes take names, so in this case we have 
                                     given them the names: reply (i.e. data-reply), like (i.e. data-like), and retweet (i.e. data-retweet) 
