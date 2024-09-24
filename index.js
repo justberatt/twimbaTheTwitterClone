@@ -19,8 +19,7 @@ document.addEventListener('click', (e) => {
 })
 
 const handleReplyClick = (replyID) => {
-    const replyDiv = document.getElementById(`replies-${replyID}`);
-    replyDiv.classList.toggle('hidden')
+    document.getElementById(`replies-${replyID}`).classList.toggle('hidden')
 }
 
 const handleLikeClick = (tweetId) => {
