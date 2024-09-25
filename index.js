@@ -16,6 +16,8 @@ document.addEventListener('click', (e) => {
         handleReplyClick(e.target.dataset.reply)
     else if(e.target.id === 'tweet-btn')
         handleTweetBtnClick()
+    else if(e.target.dataset.delete)
+        handleDeleteClick(e.target.dataset.delete)
 })
 
 const handleLikeClick = (tweetId) => {
@@ -68,6 +70,14 @@ const handleRetweetClick = (tweetId) => {
 
 const handleReplyClick = (replyID) => {
     document.getElementById(`replies-${replyID}`).classList.toggle('hidden')
+}
+
+const handleDeleteClick = (tweetID) => {
+    const tweetIndex = tweetsData.findIndex(tweet => tweet.uuid === tweetID);
+    if (tweetIndex !== -1) {
+        tweetsData.splice(tweetIndex, 1); // Modify the array in place
+        render();  // Re-render the UI after deletion
+    }
 }
 
 const handleTweetBtnClick = () => {
@@ -152,6 +162,10 @@ const getFeedHtml = () => {
                                 data-retweet="${tweet.uuid}"
                                 ></i>
                                 ${tweet.retweets}
+                            </span>
+                            <span class="tweet-detail">
+                                <i class="fa-solid fa-trash-can"
+                                data-delete="${tweet.uuid}"></i>
                             </span>
                         </div>   
                     </div>            
