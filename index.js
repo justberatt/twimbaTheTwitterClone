@@ -25,6 +25,8 @@ document.addEventListener('click', (e) => {
         handleTweetBtnClick()
     else if(e.target.dataset.delete)
         handleDeleteClick(e.target.dataset.delete)
+    else if(e.target.id === 'reset-data')
+        resetData()
 })
 
 const handleLikeClick = (tweetId) => {
@@ -85,6 +87,7 @@ const handleDeleteClick = (tweetID) => {
     const tweetIndex = tweetsData.findIndex(tweet => tweet.uuid === tweetID);
     if (tweetIndex !== -1) {
         tweetsData.splice(tweetIndex, 1); // Modify the array in place
+        updateLocalStorage()
         render();  // Re-render the UI after deletion
     }
 }
@@ -115,6 +118,11 @@ const updateLocalStorage = () => {
     localStorage.setItem('tweetsData', JSON.stringify(tweetsData));
 };
 
+const resetData = () => {
+    localStorage.removeItem('tweetsData');
+    tweetsData = [...tweetsDataArr];
+    render();
+}
 
 const getFeedHtml = () => {
     let feedHtml = ``;

@@ -130,3 +130,7 @@ button{
 .hidden{
     display: none;
 }
+
+#reset-data {
+    background-color: rgb(1, 98, 131);
+}
