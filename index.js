@@ -53,7 +53,7 @@ const handleLikeClick = (tweetId) => {
     else
         targetTweetObj.likes++;
     targetTweetObj.isLiked = !targetTweetObj.isLiked;
-    localStorage.setItem('tweetsData', JSON.stringify(tweetsData));
+    updateLocalStorage()
     render(); /* The reason we use "render()" is so that the UI gets rerendered and this will update the value of the likes (i.e. +1)
                  This happens because when we are saving the tweet inside of targetTweetObj, we are not creating a new 'tweet' object,
                  we are just referencing that object, so then when we increment the number of likes, i.e. "targetTweetObj.likes++",
@@ -71,13 +71,13 @@ const handleRetweetClick = (tweetId) => {
     else
         targetTweetObj.retweets++
     targetTweetObj.isRetweeted = !targetTweetObj.isRetweeted
-    localStorage.setItem('tweetsData', JSON.stringify(tweetsData));
+    updateLocalStorage()
     render()
 }
 
 const handleReplyClick = (replyID) => {
     document.getElementById(`replies-${replyID}`).classList.toggle('hidden')
-    localStorage.setItem('tweetsData', JSON.stringify(tweetsData));
+    updateLocalStorage()
 }
 
 const handleDeleteClick = (tweetID) => {
@@ -104,11 +104,16 @@ const handleTweetBtnClick = () => {
                 uuid: uuidv4(), 
             }
         )
-        localStorage.setItem('tweetsData', JSON.stringify(tweetsData));
+        updateLocalStorage()
         render()
         tweetInput.value = ''
     }
 }
+
+const updateLocalStorage = () => {
+    localStorage.setItem('tweetsData', JSON.stringify(tweetsData));
+};
+
 
 const getFeedHtml = () => {
     let feedHtml = ``;
