@@ -1,9 +1,11 @@
 import { tweetsDataArr  } from "./data.js";
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
 
-let tweetsData = tweetsDataArr
+let tweetsData;
 if (localStorage.getItem('tweetsData')) {
     tweetsData = JSON.parse(localStorage.getItem('tweetsData'));
+} else {
+    tweetsData = [...tweetsDataArr]
 }
 
 // tweetBtn.addEventListener('click', () => {
@@ -77,7 +79,6 @@ const handleRetweetClick = (tweetId) => {
 
 const handleReplyClick = (replyID) => {
     document.getElementById(`replies-${replyID}`).classList.toggle('hidden')
-    updateLocalStorage()
 }
 
 const handleDeleteClick = (tweetID) => {
